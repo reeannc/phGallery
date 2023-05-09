@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PH</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<style>
+:root {
+    --duration: .5s;
+}
+
+.page{
+    background-image:url(https://www.tobinreese.com/uploads/1/3/1/8/13183818/122-1_1_orig.jpg);
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+
+}
+h1{
+    padding: 60px;
+    align-items: center;
+    text-align: center;
+    font-size: 40px;
+    color:rgba(0, 0, 0, 0.845)
+}
+
+.panel{
+    border-style: solid;
+    border-radius: 3px;
+    background-image: url(https://scontent-iad3-1.xx.fbcdn.net/v/t39.30808-6/279593845_7271400126264116_7247484882415820205_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=-7oXkOZMTPYAX_9aq7S&_nc_oc=AQmEUisIcgxieag7Yjq4lEC12NW7UYeGH8LQSX_8LOym4172luIuNsucvhPlPwEEhpfbnGVJe8R3g8wiYq8l5_b3&_nc_ht=scontent-iad3-1.xx&oh=00_AfAfDnft3aJGQClbBWgyIqb1FiNCbJhzoxiZn__fMmsbUA&oe=6457D45C);
+    height: 180px;
+    width: 180px;
+    background-size: 100%;
+    background-position: center;
+    display: flex;
+}
+
+img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: solid;
+    border-color: white;
+    border-radius: 3px;
+    align-items: center;
+    margin: 30px;
+    margin-top: 200px;
+}
+
+img[data-zoom]{
+    cursor: pointer;
+}
+
+.panels{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  
+}
+
+.popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0,0,0,0.8);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--duration) ease-in-out;
+}
+
+.popup.show{
+    opacity: 1;
+}
+
+.popup img{
+    width: auto;
+    height: auto;
+    max-width: 70%;
+    max-height: 70%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transform: scale(0);
+    transition: transform var(--duration) ease-in-out;
+}
+
+.popup.show img{
+    transform: scale(1);
+}
+
+</style>
+
+<div class="page">
+    <div>
+    <h1>Places in the Philippines</h1>
+    </div>
+    <div class = "panels">
+        <img src ="img1.jpeg" data-zoom/>
+        <img src ="img2.jpeg" data-zoom/>
+        <img src ="img3.jpeg" data-zoom/>    
+    </div>
+</div>
+
+<script>
+const images = document.querySelectorAll("[data-zoom]");
+
+const duration = 
+    parseInt(
+    getComputedStyle(document.documentElement).
+    getPropertyValue("--duration")
+) * 1000;
+
+images.forEach((image)=>{
+    image.addEventListener("click", () => {
+        const imageClone = image.cloneNode(false);
+        imageClone.addEventListener(
+            "click", (e) => e.stopPropagation()
+        );
+        
+        const popup = document.createElement("div");
+        popup.classList.add("popup");
+        popup.appendChild(imageClone);
+        popup.addEventListener("click", hidePopUp);
+
+        document.body.appendChild(popup);
+        showPopup(popup);
+    });
+});
+
+function showPopup(el){
+    setTimeout(() => el.classList.add("show"), 0);
+}
+
+function hidePopUp(){
+    this.classList.remove("show");
+    setTimeout(() => this.remove(), duration);
+}
+
+
+</script>
+
+</body>
+</html>
